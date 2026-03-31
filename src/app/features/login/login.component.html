@@ -1,1 +1,81 @@
-teste
+<div class="login-container">
+  <!-- Left Panel - Hero Image -->
+  <div class="hero-panel">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="carousel-dots">
+        @for (slide of [0, 1, 2]; track slide) {
+          <span
+            class="dot"
+            [class.active]="activeSlide() === slide"
+            (click)="setSlide(slide)"
+          ></span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Login Form -->
+  <div class="form-panel">
+    <div class="form-wrapper">
+      <h2 class="form-title">Log in.</h2>
+      <p class="form-subtitle">
+        Log in with your data that you entered during registration.
+      </p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="field-group">
+          <label class="field-label">Your e-mail</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input
+              matInput
+              formControlName="email"
+              placeholder="user name or email address"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Password</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input
+              matInput
+              [type]="hidePassword() ? 'password' : 'text'"
+              formControlName="password"
+              placeholder="Credentials"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="togglePasswordVisibility()"
+            >
+              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="keep-signed-in">
+          <mat-checkbox formControlName="keepSignedIn" color="primary">
+            keep me signed in
+          </mat-checkbox>
+        </div>
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="sign-in-btn"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <p class="signup-text">
+          Don't have an account ? <a href="#" class="link">Sign Up</a>
+        </p>
+        <a href="#" class="link forgot-link">Forgot Password?</a>
+      </div>
+    </div>
+  </div>
+</div>
