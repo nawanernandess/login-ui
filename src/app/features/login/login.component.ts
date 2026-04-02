@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -24,13 +24,20 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   readonly hidePassword = signal(true);
   readonly activeSlide = signal(0);
-  readonly totalSlides = 3;
+  readonly isDark = signal(true);
+
+  readonly slides = [
+    { image: 'assets/images/metanoia-description.jpg', alt: 'Metanoia' },
+    { image: 'assets/images/metanoia-fish.png', alt: 'Metanoia Fish' },
+    { image: 'assets/images/metanoia-heart.jpg', alt: 'Metanoia Heart' },
+  ];
 
   loginForm: FormGroup;
 
+  private carouselInterval: ReturnType<typeof setInterval> | null = null;
   private readonly _fb = inject(FormBuilder);
 
   constructor() {
@@ -48,12 +55,39 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.startCarousel();
+  }
+
+  ngOnDestroy(): void {
+    this.stopCarousel();
+  }
+
+  private startCarousel(): void {
+    this.carouselInterval = setInterval(() => {
+      this.activeSlide.update((v) => (v + 1) % this.slides.length);
+    }, 4500);
+  }
+
+  private stopCarousel(): void {
+    if (this.carouselInterval) {
+      clearInterval(this.carouselInterval);
+      this.carouselInterval = null;
+    }
+  }
+
   togglePasswordVisibility(): void {
     this.hidePassword.update((v) => !v);
   }
 
+  toggleTheme(): void {
+    this.isDark.update((v) => !v);
+  }
+
   setSlide(index: number): void {
+    this.stopCarousel();
     this.activeSlide.set(index);
+    this.startCarousel();
   }
 
   onSubmit(): void {

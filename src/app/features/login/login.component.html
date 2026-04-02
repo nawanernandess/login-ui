@@ -1,48 +1,75 @@
-<div class="login-container">
-  <!-- Left Panel - Hero Image -->
+<div class="login-container" [class.light-mode]="!isDark()">
+  <!-- Painel Esquerdo - Carrossel Dinâmico -->
   <div class="hero-panel">
+    <div class="carousel-track">
+      @for (slide of slides; track slide.image; let i = $index) {
+        <div class="carousel-slide" [class.active]="activeSlide() === i">
+          <img [src]="slide.image" [alt]="slide.alt" />
+        </div>
+      }
+    </div>
+
     <div class="hero-overlay"></div>
+
     <div class="hero-content">
+      <h1 class="brand-name">Metanoia</h1>
+      <p class="brand-verse">
+        "Não vos conformeis com este século, mas transformai-vos pela renovação
+        de vosso entendimento, para que experimenteis qual seja a boa,
+        agradável, e perfeita vontade de Deus."
+        <span class="verse-ref">— Romanos 12:2</span>
+      </p>
+
       <div class="carousel-dots">
-        @for (slide of [0, 1, 2]; track slide) {
+        @for (slide of slides; track slide.image; let i = $index) {
           <span
             class="dot"
-            [class.active]="activeSlide() === slide"
-            (click)="setSlide(slide)"
+            [class.active]="activeSlide() === i"
+            (click)="setSlide(i)"
           ></span>
         }
       </div>
     </div>
   </div>
 
-  <!-- Right Panel - Login Form -->
+  <!-- Painel Direito - Formulário de Login -->
   <div class="form-panel">
+    <button mat-icon-button class="theme-toggle" type="button" (click)="toggleTheme()" [title]="isDark() ? 'Modo claro' : 'Modo escuro'">
+      <mat-icon>{{ isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
     <div class="form-wrapper">
-      <h2 class="form-title">Log in.</h2>
+      <div class="form-brand">Metanoia</div>
+      <h2 class="form-title">Entrar.</h2>
       <p class="form-subtitle">
-        Log in with your data that you entered during registration.
+        Acesse com os dados que você cadastrou no momento do registro.
       </p>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="field-group">
-          <label class="field-label">Your e-mail</label>
+          <label class="field-label">Seu e-mail</label>
           <mat-form-field appearance="outline" class="full-width">
             <input
               matInput
               formControlName="email"
-              placeholder="user name or email address"
+              placeholder="nome de usuário ou endereço de e-mail"
             />
+            @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')) {
+              <mat-error>E-mail é obrigatório</mat-error>
+            } @else if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')) {
+              <mat-error>Informe um e-mail válido</mat-error>
+            }
           </mat-form-field>
         </div>
 
         <div class="field-group">
-          <label class="field-label">Password</label>
+          <label class="field-label">Senha</label>
           <mat-form-field appearance="outline" class="full-width">
             <input
               matInput
               [type]="hidePassword() ? 'password' : 'text'"
               formControlName="password"
-              placeholder="Credentials"
+              placeholder="Sua senha"
             />
             <button
               mat-icon-button
@@ -52,12 +79,17 @@
             >
               <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
+            @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) {
+              <mat-error>Senha é obrigatória</mat-error>
+            } @else if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')) {
+              <mat-error>Mínimo de 8 caracteres</mat-error>
+            }
           </mat-form-field>
         </div>
 
         <div class="keep-signed-in">
           <mat-checkbox formControlName="keepSignedIn" color="primary">
-            keep me signed in
+            manter-me conectado
           </mat-checkbox>
         </div>
 
@@ -66,15 +98,15 @@
           type="submit"
           class="sign-in-btn"
         >
-          Sign In
+          Entrar
         </button>
       </form>
 
       <div class="form-footer">
         <p class="signup-text">
-          Don't have an account ? <a href="#" class="link">Sign Up</a>
+          Não tem uma conta? <a href="#" class="link">Cadastre-se</a>
         </p>
-        <a href="#" class="link forgot-link">Forgot Password?</a>
+        <a href="#" class="link forgot-link">Esqueceu a senha?</a>
       </div>
     </div>
   </div>
