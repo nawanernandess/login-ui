@@ -1,0 +1,51 @@
+<div class="login-container" [class.light-mode]="!themeSvc.isDark()">
+  <!-- Painel Esquerdo - Carrossel Dinâmico -->
+  <div class="hero-panel">
+    <div class="carousel-track">
+      @for (slide of slides; track slide.image; let i = $index) {
+        <div class="carousel-slide" [class.active]="activeSlide() === i">
+          <img [src]="slide.image" [alt]="slide.alt" />
+        </div>
+      }
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1 class="brand-name">Metanoia</h1>
+      <p class="brand-verse">
+        "Não vos conformeis com este século, mas transformai-vos pela renovação
+        de vosso entendimento, para que experimenteis qual seja a boa,
+        agradável, e perfeita vontade de Deus."
+        <span class="verse-ref">— Romanos 12:2</span>
+      </p>
+
+      <div class="carousel-dots">
+        @for (slide of slides; track slide.image; let i = $index) {
+          <span
+            class="dot"
+            [class.active]="activeSlide() === i"
+            (click)="setSlide(i)"
+          ></span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel Direito - Conteúdo injetado via ng-content -->
+  <div class="form-panel">
+    <button
+      mat-icon-button
+      class="theme-toggle"
+      type="button"
+      (click)="themeSvc.toggle()"
+      [title]="themeSvc.isDark() ? 'Modo claro' : 'Modo escuro'"
+    >
+      <mat-icon>{{ themeSvc.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    <div class="form-wrapper">
+      <ng-content />
+    </div>
+  </div>
+</div>

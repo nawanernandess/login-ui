@@ -1,0 +1,151 @@
+// Container layout
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-page);
+  transition: background 0.4s ease;
+}
+
+// Left Panel — Dynamic Carousel
+.hero-panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-page);
+
+  .carousel-track {
+    position: absolute;
+    inset: 0;
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      var(--overlay-a) 0%,
+      var(--overlay-b) 50%,
+      var(--overlay-c) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 2.5rem 3.5rem;
+  }
+
+  .brand-name {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    margin: 0 0 1rem;
+    background: linear-gradient(135deg, var(--name-from) 0%, var(--name-to) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .brand-verse {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--verse-color);
+    max-width: 360px;
+    margin: 0 auto 1.75rem;
+    font-style: italic;
+
+    .verse-ref {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dot-idle);
+      cursor: pointer;
+      transition: all 0.35s ease;
+
+      &.active {
+        background: var(--accent);
+        width: 24px;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+// Right Panel
+.form-panel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  background: var(--bg-card);
+  padding: 3.5rem 2rem 2rem;
+  border-left: 1px solid var(--border);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+// Theme Toggle Button
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  ::ng-deep .mat-icon {
+    color: var(--text-muted) !important;
+    transition: color 0.3s ease;
+  }
+
+  &:hover ::ng-deep .mat-icon {
+    color: var(--accent) !important;
+  }
+}
+
+// Form content wrapper
+.form-wrapper {
+  width: 100%;
+  max-width: 380px;
+  margin: auto 0;
+}
+
+// Responsive
