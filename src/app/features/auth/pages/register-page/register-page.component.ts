@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout.component';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 
@@ -7,5 +7,6 @@ import { RegisterFormComponent } from '../../components/register-form/register-f
   imports: [AuthLayoutComponent, RegisterFormComponent],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterPageComponent {}

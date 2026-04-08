@@ -1,7 +1,9 @@
 // ─────────────────────────────────────────────────────────────
-// Global Angular Material form-field overrides
+// Global Angular Material overrides
 // Uses CSS custom properties defined in the theme files.
 // ─────────────────────────────────────────────────────────────
+
+// ── Form field ───────────────────────────────────────────────
 
 .mat-mdc-text-field-wrapper {
   background: var(--bg-field) !important;
@@ -56,4 +58,33 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .mat-mdc-form-field-error {
   font-size: 0.75rem;
   color: #ff7b7b !important;
+}
+
+// ── Checkbox ─────────────────────────────────────────────────
+
+.mdc-checkbox__background {
+  border-color: var(--border) !important;
+}
+
+.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.mat-mdc-checkbox .mdc-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+// ── Icon button colors (theme toggle, back button) ───────────
+
+.back-btn .mat-icon,
+.theme-toggle .mat-icon {
+  color: var(--text-muted) !important;
+  transition: color 0.3s ease;
+}
+
+.back-btn:hover .mat-icon,
+.theme-toggle:hover .mat-icon {
+  color: var(--accent) !important;
 }

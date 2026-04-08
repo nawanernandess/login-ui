@@ -1,43 +1,22 @@
-// Back button — posicionado no canto superior esquerdo do form-panel
-.back-btn {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  color: var(--text-muted);
-  transition: color 0.3s ease;
+@use 'styles/shared-form' as form;
 
-  ::ng-deep .mat-icon {
-    color: inherit !important;
-  }
-
-  &:hover {
-    color: var(--accent);
-  }
+:host {
+  display: block;
 }
 
-// Form Brand Header
-.form-brand {
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.4rem;
+@include form.field-group;
+@include form.submit-button;
+@include form.back-button;
+@include form.server-error;
+
+// Formulário mais denso — espaçamento menor entre campos
+.field-group {
+  margin-bottom: 1.1rem;
 }
 
-.form-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin: 0 0 0.5rem;
-  transition: color 0.4s ease;
-}
-
-.form-subtitle {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin: 0 0 1.5rem;
+// Reduz margem do subtítulo para acomodar mais campos na tela
+app-form-header {
+  --form-subtitle-mb: 1.5rem;
 }
 
 // Layout de dois campos lado a lado
@@ -48,45 +27,12 @@
 
   .field-group {
     flex: 1;
-    min-width: 0; // evita que filhos flex estourem o container
+    min-width: 0;
     overflow: hidden;
   }
 }
 
-.field-group {
-  margin-bottom: 1.1rem;
-}
-
-.field-label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-main);
-  margin-bottom: 0.35rem;
-  transition: color 0.4s ease;
-}
-
-.full-width {
-  width: 100%;
-}
-
-// Submit Button
+// Espaçamento extra para o botão de submit
 .submit-btn {
-  width: 100%;
-  height: 48px;
-  border-radius: 8px !important;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
   margin-top: 0.25rem;
-  background: linear-gradient(135deg, var(--btn-from) 0%, var(--btn-to) 100%) !important;
-  border: 1px solid var(--btn-border) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 20px var(--btn-shadow) !important;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: linear-gradient(135deg, var(--btn-hover-from) 0%, var(--btn-hover-to) 100%) !important;
-    box-shadow: 0 6px 24px var(--btn-shadow-hover) !important;
-  }
 }

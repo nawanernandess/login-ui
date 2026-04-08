@@ -1,17 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs/operators';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
+import { FormHeaderComponent } from '../../../../shared/components/form-header/form-header.component';
+import {
+  PasswordFieldComponent,
+  FieldError,
+} from '../../../../shared/components/password-field/password-field.component';
 
 @Component({
   selector: 'app-login-form',
@@ -22,17 +23,22 @@ import { AuthService } from '../../services/auth.service';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatIconModule,
+    FormHeaderComponent,
+    PasswordFieldComponent,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
-  readonly hidePassword = signal(true);
-  private readonly _fb = inject(FormBuilder);
+  private readonly _fb = inject(NonNullableFormBuilder);
   private readonly _authSvc = inject(AuthService);
+  private readonly _destroyRef = inject(DestroyRef);
 
-  readonly loginForm: FormGroup = this._fb.group({
+  readonly isLoading = signal(false);
+  readonly serverError = signal<string | null>(null);
+
+  readonly form = this._fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: [
       '',
@@ -45,15 +51,36 @@ export class LoginFormComponent {
     keepSignedIn: [false],
   });
 
-  togglePasswordVisibility(): void {
-    this.hidePassword.update((v) => !v);
-  }
+  readonly passwordErrors: FieldError[] = [
+    { key: 'required', message: 'Senha \u00e9 obrigat\u00f3ria' },
+    { key: 'minlength', message: 'M\u00ednimo de 8 caracteres' },
+  ];
 
   onSubmit(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
+    if (this.form.invalid || this.isLoading()) {
+      this.form.markAllAsTouched();
       return;
     }
-    this._authSvc.login(this.loginForm.value);
+
+    this.isLoading.set(true);
+    this.serverError.set(null);
+
+    this._authSvc
+      .login(this.form.getRawValue())
+      .pipe(
+        takeUntilDestroyed(this._destroyRef),
+        finalize(() => this.isLoading.set(false)),
+      )
+      .subscribe({
+        next: (res) => {
+          // TODO: armazenar token e navegar para o dashboard
+          console.log('[Login] sucesso:', res);
+        },
+        error: (err: Error) => {
+          this.serverError.set(
+            err.message || 'N\u00e3o foi poss\u00edvel entrar. Tente novamente.',
+          );
+        },
+      });
   }
 }

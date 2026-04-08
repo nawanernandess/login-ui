@@ -131,17 +131,15 @@
   top: 1rem;
   right: 1rem;
 
-  ::ng-deep .mat-icon {
-    color: var(--text-muted) !important;
+  mat-icon {
+    color: var(--text-muted);
     transition: color 0.3s ease;
   }
 
-  &:hover ::ng-deep .mat-icon {
-    color: var(--accent) !important;
+  &:hover mat-icon {
+    color: var(--accent);
   }
 }
-
-// Form content wrapper
 .form-wrapper {
   width: 100%;
   max-width: 380px;
