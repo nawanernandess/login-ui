@@ -29,7 +29,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       transition: color 0.4s ease;
     }
 
-    /* Margem inferior customizavél via CSS var: --form-subtitle-mb */
     .form-subtitle {
       font-size: 0.875rem;
       color: var(--text-muted);

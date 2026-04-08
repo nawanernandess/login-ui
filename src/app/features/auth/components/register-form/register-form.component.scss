@@ -9,17 +9,14 @@
 @include form.back-button;
 @include form.server-error;
 
-// Formulário mais denso — espaçamento menor entre campos
 .field-group {
   margin-bottom: 1.1rem;
 }
 
-// Reduz margem do subtítulo para acomodar mais campos na tela
 app-form-header {
   --form-subtitle-mb: 1.5rem;
 }
 
-// Layout de dois campos lado a lado
 .field-row {
   display: flex;
   gap: 0.75rem;
@@ -32,7 +29,6 @@ app-form-header {
   }
 }
 
-// Espaçamento extra para o botão de submit
 .submit-btn {
   margin-top: 0.25rem;
 }

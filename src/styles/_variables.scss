@@ -1,16 +1,8 @@
-// ─────────────────────────────────────────────────────────────
-// Compile-time SCSS variables — shared across the whole project.
-// Import with: @use 'src/styles/variables' as vars;
-// ─────────────────────────────────────────────────────────────
-
-// Typography
 $font-primary:  'Inter', Roboto, 'Helvetica Neue', sans-serif;
 
-// Transitions
 $transition-theme: 0.4s ease;
 $transition-fast:  0.3s ease;
 
-// Layout
 $form-max-width:    380px;
 $breakpoint-sm:     768px;
 $hero-min-height-sm: 45vh;

@@ -13,6 +13,7 @@ export class ThemeService {
       const dark = this.isDark();
       localStorage.setItem(this._themeKey, dark ? 'dark' : 'light');
       this._doc.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      this._doc.documentElement.classList.toggle('light-mode', !dark);
     });
   }
 

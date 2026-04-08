@@ -1,19 +1,9 @@
-// ─────────────────────────────────────────────────────────────
-// Global entry point
-// ─────────────────────────────────────────────────────────────
 @use '@angular/material' as mat;
-
-// Compile-time variables (fonts, breakpoints, transitions)
 @use 'styles/variables' as vars;
-
-// Runtime theme tokens (CSS custom properties)
 @use 'styles/themes/dark-theme';
 @use 'styles/themes/light-theme';
-
-// Global Angular Material overrides
 @use 'styles/mat-form-field';
 
-// ── Angular Material theme ───────────────────────────────────
 html {
   color-scheme: dark;
 
@@ -27,7 +17,6 @@ html {
   ));
 }
 
-// ── Base styles ──────────────────────────────────────────────
 html,
 body {
   height: 100%;

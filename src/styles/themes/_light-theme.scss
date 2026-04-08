@@ -1,25 +1,15 @@
-// ─────────────────────────────────────────────────────────────
-// Light theme — overrides applied when .light-mode is present
-// on .login-container.
-// ─────────────────────────────────────────────────────────────
-
-.login-container.light-mode {
-  // Backgrounds
+:root.light-mode {
   --bg-page:          #eef0fa;
   --bg-card:          #ffffff;
   --bg-field:         #f4f5fb;
 
-  // Typography
   --text-main:        #1a1a2e;
   --text-muted:       #6b7280;
 
-  // Borders
   --border:           #dcdff0;
 
-  // Accent / brand colour
   --accent:           #7c5cbf;
 
-  // Button
   --btn-from:         #3d2b72;
   --btn-to:           #281b52;
   --btn-border:       rgba(124, 92, 191, 0.35);
@@ -28,12 +18,10 @@
   --btn-shadow:       rgba(124, 92, 191, 0.15);
   --btn-shadow-hover: rgba(124, 92, 191, 0.28);
 
-  // Hero overlay — kept dark in light mode for contrast over images
   --overlay-a:        rgba(8, 6, 22, 0.82);
   --overlay-b:        rgba(8, 6, 22, 0.45);
   --overlay-c:        rgba(8, 6, 22, 0.10);
 
-  // Hero text — always white (dark overlay behind it)
   --name-from:        #ffffff;
   --name-to:          #c9a8ff;
   --verse-color:      rgba(255, 255, 255, 0.85);

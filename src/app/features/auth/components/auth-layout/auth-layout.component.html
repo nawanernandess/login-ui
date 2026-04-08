@@ -1,5 +1,4 @@
-<div class="login-container" [class.light-mode]="!themeSvc.isDark()">
-  <!-- Painel Esquerdo - Carrossel Dinâmico -->
+<div class="login-container">
   <div class="hero-panel">
     <div class="carousel-track">
       @for (slide of slides; track slide.image; let i = $index) {
@@ -32,7 +31,6 @@
     </div>
   </div>
 
-  <!-- Painel Direito - Conteúdo injetado via ng-content -->
   <div class="form-panel">
     <button
       mat-icon-button

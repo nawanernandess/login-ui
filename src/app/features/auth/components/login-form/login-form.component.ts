@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs/operators';
@@ -33,6 +33,7 @@ import {
 export class LoginFormComponent {
   private readonly _fb = inject(NonNullableFormBuilder);
   private readonly _authSvc = inject(AuthService);
+  private readonly _router = inject(Router);
   private readonly _destroyRef = inject(DestroyRef);
 
   readonly isLoading = signal(false);
@@ -72,9 +73,8 @@ export class LoginFormComponent {
         finalize(() => this.isLoading.set(false)),
       )
       .subscribe({
-        next: (res) => {
-          // TODO: armazenar token e navegar para o dashboard
-          console.log('[Login] sucesso:', res);
+        next: () => {
+          this._router.navigate(['/dashboard'], { replaceUrl: true });
         },
         error: (err: Error) => {
           this.serverError.set(

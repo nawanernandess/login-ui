@@ -33,11 +33,6 @@ export class PasswordFieldComponent {
 
   readonly hide = signal(true);
 
-  /**
-   * Converte o status do FormControl (RxJS) em um Signal Angular 19.
-   * Isso permite que computed() reaja automaticamente às mudanças de
-   * validação sem provocar ExpressionChangedAfterItHasBeenCheckedError.
-   */
   private readonly _status = toSignal(
     toObservable(this.control).pipe(
       switchMap((ctrl) => ctrl.statusChanges.pipe(startWith(ctrl.status)))
@@ -45,9 +40,8 @@ export class PasswordFieldComponent {
     { initialValue: 'VALID' }
   );
 
-  /** Mensagem do primeiro erro ativo, ou null quando válido. */
   readonly currentError = computed(() => {
-    this._status(); // dependência reativa no status do control
+    this._status();
     const ctrl = this.control();
     return this.errors().find((e) => ctrl.hasError(e.key)) ?? null;
   });

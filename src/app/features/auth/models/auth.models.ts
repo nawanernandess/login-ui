@@ -1,5 +1,3 @@
-// ─── Requests ───────────────────────────────────────────────
-
 export interface LoginRequest {
   email: string;
   password: string;
@@ -18,8 +16,6 @@ export interface ForgotPasswordRequest {
   email: string;
 }
 
-// ─── Entities ────────────────────────────────────────────────
-
 export interface User {
   id: string;
   name: string;
@@ -32,10 +28,17 @@ export interface AuthToken {
   expiresIn: number;
 }
 
-// ─── Responses ───────────────────────────────────────────────
-
 export interface LoginResponse {
   user: User;
   token: AuthToken;
+}
+
+export interface RegisterResponse {
+  user: User;
+  token: AuthToken;
+}
+
+export interface ForgotPasswordResponse {
+  message: string;
 }
 

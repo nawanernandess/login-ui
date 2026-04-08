@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Usuário Teste",
+      "email": "teste@metanoia.com",
+      "password": "12345678",
+      "birthDate": "1995-06-15",
+      "phone": "(11) 99999-0000"
+    },
+    {
+      "id": 2,
+      "name": "Novo User",
+      "email": "novo@test.com",
+      "password": "12345678",
+      "birthDate": "2000-01-01",
+      "phone": "(11) 98888-7777"
+    }
+  ],
+  "password-resets": []
+}

@@ -1,25 +1,15 @@
-// ─────────────────────────────────────────────────────────────
-// Dark theme — default CSS custom properties.
-// Applied on .login-container (no extra class needed).
-// ─────────────────────────────────────────────────────────────
-
-.login-container {
-  // Backgrounds
+:root {
   --bg-page:          #0c0c1c;
   --bg-card:          #12122a;
   --bg-field:         #1c1c34;
 
-  // Typography
   --text-main:        #ffffff;
   --text-muted:       #7a7a9a;
 
-  // Borders
   --border:           #252545;
 
-  // Accent / brand colour
   --accent:           #a07ee0;
 
-  // Button
   --btn-from:         #2b2150;
   --btn-to:           #1a1535;
   --btn-border:       rgba(160, 126, 224, 0.25);
@@ -28,12 +18,10 @@
   --btn-shadow:       rgba(160, 126, 224, 0.12);
   --btn-shadow-hover: rgba(160, 126, 224, 0.22);
 
-  // Hero overlay (always dark for legibility over images)
   --overlay-a:        rgba(12, 12, 28, 0.97);
   --overlay-b:        rgba(12, 12, 28, 0.50);
   --overlay-c:        rgba(12, 12, 28, 0.12);
 
-  // Hero text
   --name-from:        #ffffff;
   --name-to:          #a07ee0;
   --verse-color:      rgba(255, 255, 255, 0.82);

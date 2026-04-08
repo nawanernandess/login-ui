@@ -1,0 +1,38 @@
+<div class="dash-shell">
+  <header class="dash-header">
+    <span class="dash-brand">Metanoia</span>
+
+    <div class="dash-actions">
+      <button
+        mat-icon-button
+        type="button"
+        class="theme-toggle"
+        (click)="themeSvc.toggle()"
+        [title]="themeSvc.isDark() ? 'Modo claro' : 'Modo escuro'"
+      >
+        <mat-icon>{{ themeSvc.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
+      <button mat-stroked-button class="logout-btn" (click)="authSvc.logout()">
+        <mat-icon>logout</mat-icon>
+        Sair
+      </button>
+    </div>
+  </header>
+
+  <main class="dash-content">
+    <div class="dash-card">
+      <h2 class="dash-welcome">Bem-vindo, {{ authSvc.currentUser()?.name }}!</h2>
+
+      <p class="dash-email">
+        <mat-icon class="info-icon">alternate_email</mat-icon>
+        {{ authSvc.currentUser()?.email }}
+      </p>
+
+      <p class="dash-hint">
+        Esta é uma página de dashboard mockada.
+        Quando seu backend estiver pronto, substitua o json-server pela API real.
+      </p>
+    </div>
+  </main>
+</div>

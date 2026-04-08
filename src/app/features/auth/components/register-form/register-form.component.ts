@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
   NonNullableFormBuilder,
@@ -39,6 +39,7 @@ import {
 export class RegisterFormComponent {
   private readonly _fb = inject(NonNullableFormBuilder);
   private readonly _authSvc = inject(AuthService);
+  private readonly _router = inject(Router);
   private readonly _destroyRef = inject(DestroyRef);
 
   readonly isLoading = signal(false);
@@ -64,7 +65,6 @@ export class RegisterFormComponent {
   ];
 
   constructor() {
-    // Revalida confirmPassword sempre que password muda
     this.form.controls.password.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe(() =>
@@ -91,8 +91,7 @@ export class RegisterFormComponent {
       )
       .subscribe({
         next: () => {
-          // TODO: navegar para login ou dashboard após cadastro
-          console.log('[Register] sucesso');
+          this._router.navigate(['/dashboard'], { replaceUrl: true });
         },
         error: (err: Error) => {
           this.serverError.set(
