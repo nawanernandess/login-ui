@@ -53,8 +53,8 @@ export class LoginFormComponent {
   });
 
   readonly passwordErrors: FieldError[] = [
-    { key: 'required', message: 'Senha \u00e9 obrigat\u00f3ria' },
-    { key: 'minlength', message: 'M\u00ednimo de 8 caracteres' },
+    { key: 'required', message: 'Senha é obrigatória' },
+    { key: 'minlength', message: 'Mínimo de 8 caracteres' },
   ];
 
   onSubmit(): void {
@@ -78,7 +78,7 @@ export class LoginFormComponent {
         },
         error: (err: Error) => {
           this.serverError.set(
-            err.message || 'N\u00e3o foi poss\u00edvel entrar. Tente novamente.',
+            err.message || 'Não foi possível entrar. Tente novamente.',
           );
         },
       });

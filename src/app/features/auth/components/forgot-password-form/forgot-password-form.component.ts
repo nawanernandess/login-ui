@@ -57,7 +57,7 @@ export class ForgotPasswordFormComponent {
         next: () => this.emailSent.set(true),
         error: (err: Error) => {
           this.serverError.set(
-            err.message || 'N\u00e3o foi poss\u00edvel enviar o e-mail. Tente novamente.',
+            err.message || 'Não foi possível enviar o e-mail. Tente novamente.',
           );
         },
       });

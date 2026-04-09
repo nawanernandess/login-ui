@@ -47,21 +47,21 @@ export class RegisterFormComponent {
 
   readonly form = this._fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
-    birthDate: ['', Validators.required],
-    phone: ['', [Validators.required, Validators.pattern(/^[\d\s()+-]{10,15}$/)]],
+    birthDate: [''],
+    phone: ['', [Validators.pattern(/^[\d\s()+-]{10,15}$/)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
     confirmPassword: ['', [Validators.required, RegisterFormComponent.matchPasswordValidator]],
   });
 
   readonly passwordErrors: FieldError[] = [
-    { key: 'required', message: 'Senha \u00e9 obrigat\u00f3ria' },
-    { key: 'minlength', message: 'M\u00ednimo de 8 caracteres' },
+    { key: 'required', message: 'Senha é obrigatória' },
+    { key: 'minlength', message: 'Mínimo de 8 caracteres' },
   ];
 
   readonly confirmPasswordErrors: FieldError[] = [
     { key: 'required', message: 'Confirme sua senha' },
-    { key: 'passwordMismatch', message: 'As senhas n\u00e3o coincidem' },
+    { key: 'passwordMismatch', message: 'As senhas não coincidem' },
   ];
 
   constructor() {
