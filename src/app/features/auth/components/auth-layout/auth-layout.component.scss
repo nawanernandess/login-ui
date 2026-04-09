@@ -126,18 +126,126 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-
-  mat-icon {
-    color: var(--text-muted);
-    transition: color 0.3s ease;
-  }
-
-  &:hover mat-icon {
-    color: var(--accent);
-  }
 }
 .form-wrapper {
   width: 100%;
   max-width: 380px;
   margin: auto 0;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-panel {
+    flex: 0 0 44%;
+
+    .hero-content {
+      padding: 0 2rem 3rem;
+    }
+
+    .brand-name {
+      font-size: 2.4rem;
+    }
+
+    .brand-verse {
+      font-size: 0.85rem;
+      max-width: 270px;
+    }
+  }
+
+  .form-panel {
+    flex: 0 0 56%;
+    padding: 3rem 1.75rem 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-container {
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .hero-panel {
+    flex: none;
+    height: 300px;
+    width: 100%;
+    align-items: center;
+
+    .hero-content {
+      padding: 0 1.75rem 1rem;
+      width: 100%;
+    }
+
+    .brand-name {
+      font-size: 2rem;
+      margin-bottom: 0.625rem;
+    }
+
+    .brand-verse {
+      display: block;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      max-width: 100%;
+      margin: 0 auto 1.25rem;
+    }
+
+    .carousel-dots {
+      margin-top: 0;
+    }
+  }
+
+  .form-panel {
+    flex: 1;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 1.75rem 1.5rem 2rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .form-wrapper {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 0.875rem;
+    right: 0.875rem;
+    z-index: 100;
+
+    background: rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50%;
+
+    mat-icon {
+      color: #ffffff !important;
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.52) !important;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .hero-panel {
+    height: 270px;
+
+    .hero-content {
+      padding: 0 1.25rem 0.75rem;
+    }
+
+    .brand-name {
+      font-size: 1.75rem;
+    }
+
+    .brand-verse {
+      font-size: 0.72rem;
+    }
+  }
+
+  .form-panel {
+    padding: 1.75rem 1.125rem 2rem;
+  }
 }

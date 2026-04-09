@@ -35,6 +35,28 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       line-height: 1.5;
       margin: 0 0 var(--form-subtitle-mb, 2rem);
     }
+
+    @media (max-width: 767px) {
+      .form-title {
+        font-size: 1.55rem;
+      }
+    }
+
+    @media (max-width: 479px) {
+      .form-brand {
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .form-title {
+        font-size: 1.4rem;
+      }
+
+      .form-subtitle {
+        font-size: 0.825rem;
+        margin-bottom: var(--form-subtitle-mb, 1.5rem);
+      }
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

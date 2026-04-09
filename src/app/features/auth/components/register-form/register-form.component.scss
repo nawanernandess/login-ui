@@ -32,3 +32,11 @@ app-form-header {
 .submit-btn {
   margin-top: 0.25rem;
 }
+
+
+@media (max-width: 479px) {
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

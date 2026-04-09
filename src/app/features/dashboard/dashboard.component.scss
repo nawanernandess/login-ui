@@ -36,17 +36,6 @@
   gap: 0.5rem;
 }
 
-.theme-toggle {
-  mat-icon {
-    color: var(--text-muted);
-    transition: color 0.3s ease;
-  }
-
-  &:hover mat-icon {
-    color: var(--accent);
-  }
-}
-
 .logout-btn {
   color: var(--text-muted) !important;
   border-color: var(--border) !important;
@@ -108,4 +97,74 @@
   padding-top: 1rem;
   border-top: 1px solid var(--border);
   transition: color 0.4s ease, border-color 0.4s ease;
+}
+
+
+@media (max-width: 1023px) {
+  .dash-content {
+    padding: 2rem 1.5rem;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .dash-header {
+    padding: 0 1rem;
+    height: 56px;
+  }
+
+  .dash-brand {
+    font-size: 0.95rem;
+  }
+
+  .logout-btn {
+    margin: 0 !important;
+
+    mat-icon {
+      margin: 0 !important;
+    }
+  }
+
+  .theme-toggle {
+    margin: 0 !important;
+
+    mat-icon {
+      margin: 0 !important;
+    }
+  }
+
+  .dash-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .dash-card {
+    padding: 1.25rem;
+  }
+
+  .dash-welcome {
+    font-size: 1.15rem;
+  }
+}
+
+
+@media (max-width: 479px) {
+  .dash-header {
+    height: 52px;
+  }
+
+  .dash-brand {
+    font-size: 0.85rem;
+  }
+
+  .logout-btn .btn-label {
+    display: none;
+  }
+
+  .dash-content {
+    padding: 1rem 0.875rem;
+  }
+
+  .dash-card {
+    padding: 1rem;
+  }
 }
