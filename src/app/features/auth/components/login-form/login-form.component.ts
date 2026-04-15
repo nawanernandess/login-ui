@@ -13,6 +13,8 @@ import {
   PasswordFieldComponent,
   FieldError,
 } from '../../../../shared/components/password-field/password-field.component';
+import { GoogleSsoButtonComponent } from '../google-sso-button/google-sso-button.component';
+import { GoogleCredentialResponse } from '../../models/auth.models';
 
 @Component({
   selector: 'app-login-form',
@@ -25,6 +27,7 @@ import {
     MatCheckboxModule,
     FormHeaderComponent,
     PasswordFieldComponent,
+    GoogleSsoButtonComponent,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
@@ -37,6 +40,7 @@ export class LoginFormComponent {
   private readonly _destroyRef = inject(DestroyRef);
 
   readonly isLoading = signal(false);
+  readonly isGoogleLoading = signal(false);
   readonly serverError = signal<string | null>(null);
 
   readonly form = this._fb.group({
@@ -82,5 +86,33 @@ export class LoginFormComponent {
           );
         },
       });
+  }
+
+  onGoogleCredential(response: GoogleCredentialResponse): void {
+    if (this.isGoogleLoading()) return;
+
+    this.isGoogleLoading.set(true);
+    this.serverError.set(null);
+
+    this._authSvc
+      .loginWithGoogle(response.credential)
+      .pipe(
+        takeUntilDestroyed(this._destroyRef),
+        finalize(() => this.isGoogleLoading.set(false)),
+      )
+      .subscribe({
+        next: () => {
+          this._router.navigate(['/dashboard'], { replaceUrl: true });
+        },
+        error: (err: Error) => {
+          this.serverError.set(
+            err.message || 'Falha ao autenticar com o Google. Tente novamente.',
+          );
+        },
+      });
+  }
+
+  onGoogleError(message: string): void {
+    this.serverError.set(message);
   }
 }

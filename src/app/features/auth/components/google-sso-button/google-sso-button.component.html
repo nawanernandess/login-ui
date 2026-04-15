@@ -1,0 +1,22 @@
+<div class="google-sso-wrapper">
+  <div class="divider">
+    <span class="divider-line"></span>
+    <span class="divider-text">ou</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <button
+    type="button"
+    class="google-btn"
+    [disabled]="!loaded()"
+    (click)="onSignIn()"
+  >
+    <img
+      class="google-logo"
+      src="assets/icons/google-logo.svg"
+      alt=""
+      aria-hidden="true"
+    />
+    <span>Entrar com o Google</span>
+  </button>
+</div>

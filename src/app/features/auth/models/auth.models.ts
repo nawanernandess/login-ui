@@ -42,3 +42,13 @@ export interface ForgotPasswordResponse {
   message: string;
 }
 
+export interface GoogleLoginRequest {
+  credential: string;
+}
+
+export interface GoogleCredentialResponse {
+  credential: string;
+  select_by: string;
+  clientId?: string;
+}
+

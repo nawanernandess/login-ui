@@ -6,6 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import {
   ForgotPasswordRequest,
   ForgotPasswordResponse,
+  GoogleLoginRequest,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
@@ -49,6 +50,14 @@ export class AuthService {
     return this._http
       .post<ForgotPasswordResponse>(`${this._apiUrl}/auth/forgot-password`, request)
       .pipe(catchError(this._handleError));
+  }
+
+  loginWithGoogle(credential: string): Observable<LoginResponse> {
+    const request: GoogleLoginRequest = { credential };
+    return this._http.post<LoginResponse>(`${this._apiUrl}/auth/google`, request).pipe(
+      tap((res) => this._storeSession(res)),
+      catchError(this._handleError),
+    );
   }
 
   getToken(): string | null {

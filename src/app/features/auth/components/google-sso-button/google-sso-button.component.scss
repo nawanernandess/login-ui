@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.google-sso-wrapper {
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  transition: background 0.4s ease;
+}
+
+.divider-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color 0.4s ease;
+}
+
+.google-btn {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-field);
+  color: var(--text-main);
+  font-family: 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+
+  &:hover:not(:disabled) {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px var(--btn-shadow);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 767px) {
+    height: 50px;
+  }
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}

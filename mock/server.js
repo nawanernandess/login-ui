@@ -121,6 +121,52 @@ server.get('/api/auth/me', (req, res) => {
   return res.status(200).json(userWithoutPassword);
 });
 
+server.post('/api/auth/google', (req, res) => {
+  const { credential } = req.body;
+
+  if (!credential) {
+    return res.status(400).json({ message: 'Credencial do Google é obrigatória.' });
+  }
+
+  let payload;
+  try {
+    const parts = credential.split('.');
+    if (parts.length !== 3) throw new Error('Token inválido');
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    payload = JSON.parse(Buffer.from(base64, 'base64').toString('utf-8'));
+  } catch {
+    return res.status(401).json({ message: 'Token do Google inválido.' });
+  }
+
+  const { email, name, sub: googleId } = payload;
+
+  if (!email) {
+    return res.status(401).json({ message: 'Token do Google não contém e-mail.' });
+  }
+
+  const db = router.db;
+  let user = db.get('users').find({ email }).value();
+
+  if (!user) {
+    const lastUser = db.get('users').sortBy('id').last().value();
+    const newId = lastUser ? lastUser.id + 1 : 1;
+
+    user = { id: newId, name: name || email, email, password: null, googleId, birthDate: null, phone: null };
+    db.get('users').push(user).write();
+  }
+
+  const { password: __, ...userWithoutPassword } = user;
+
+  return res.status(200).json({
+    user: userWithoutPassword,
+    token: {
+      accessToken: 'mock-jwt-' + generateToken(),
+      refreshToken: 'mock-refresh-' + generateToken(),
+      expiresIn: 3600,
+    },
+  });
+});
+
 server.use('/api', router);
 
 server.listen(PORT, () => {});

@@ -44,6 +44,15 @@
   </button>
 </form>
 
+<app-google-sso-button
+  (credentialReceived)="onGoogleCredential($event)"
+  (error)="onGoogleError($event)"
+/>
+
+@if (isGoogleLoading()) {
+  <div class="server-error" role="status">Autenticando com o Google...</div>
+}
+
 <div class="form-footer">
   <p class="signup-text">
     Não tem uma conta? <a routerLink="/register" class="link">Cadastre-se</a>
