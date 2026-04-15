@@ -32,6 +32,12 @@ export class GoogleSsoService {
   private readonly _credential$ = new Subject<GoogleCredentialResponse>();
 
   initialize(): Observable<boolean> {
+    if (this._clientId.includes('YOUR_GOOGLE_CLIENT_ID')) {
+      console.warn('[GoogleSsoService] Client ID não configurado. Atualize environment.googleClientId.');
+      this._scriptLoaded$.next(false);
+      return this._scriptLoaded$.pipe(take(1));
+    }
+
     if (!this._initialized) {
       this._loadScript();
     }
@@ -49,10 +55,12 @@ export class GoogleSsoService {
   }
 
   revoke(email: string): Observable<void> {
-    return new Observable((observer) => {
+    return new Observable<void>((observer) => {
       google.accounts.id.revoke(email, () => {
-        observer.next();
-        observer.complete();
+        this._zone.run(() => {
+          observer.next();
+          observer.complete();
+        });
       });
     });
   }

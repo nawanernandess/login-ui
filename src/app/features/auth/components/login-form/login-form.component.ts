@@ -9,10 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AuthService } from '../../services/auth.service';
 import { FormHeaderComponent } from '../../../../shared/components/form-header/form-header.component';
-import {
-  PasswordFieldComponent,
-  FieldError,
-} from '../../../../shared/components/password-field/password-field.component';
+import { PasswordFieldComponent } from '../../../../shared/components/password-field/password-field.component';
+import { PASSWORD_ERRORS, passwordValidators } from '../../../../shared/validators/password.validators';
 import { GoogleSsoButtonComponent } from '../google-sso-button/google-sso-button.component';
 import { GoogleCredentialResponse } from '../../models/auth.models';
 
@@ -45,21 +43,11 @@ export class LoginFormComponent {
 
   readonly form = this._fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(16),
-      ],
-    ],
+    password: ['', passwordValidators],
     keepSignedIn: [false],
   });
 
-  readonly passwordErrors: FieldError[] = [
-    { key: 'required', message: 'Senha é obrigatória' },
-    { key: 'minlength', message: 'Mínimo de 8 caracteres' },
-  ];
+  readonly passwordErrors = PASSWORD_ERRORS;
 
   onSubmit(): void {
     if (this.form.invalid || this.isLoading()) {

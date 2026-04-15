@@ -13,16 +13,15 @@ import {
   RegisterResponse,
   User,
 } from '../models/auth.models';
+import { AUTH_REFRESH_KEY, AUTH_TOKEN_KEY, AUTH_USER_KEY } from '../constants/auth.constants';
+import { StorageService } from '../../../core/services/storage.service';
 import { environment } from '../../../../environments/environment';
-
-const TOKEN_KEY = 'auth_token';
-const REFRESH_KEY = 'auth_refresh_token';
-const USER_KEY = 'auth_user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly _http = inject(HttpClient);
   private readonly _router = inject(Router);
+  private readonly _storage = inject(StorageService);
   private readonly _apiUrl = environment.apiUrl;
 
   readonly currentUser = signal<User | null>(this._loadUser());
@@ -61,7 +60,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY);
+    return this._storage.get(AUTH_TOKEN_KEY);
   }
 
   isAuthenticated(): boolean {
@@ -69,39 +68,24 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(REFRESH_KEY);
-    localStorage.removeItem(USER_KEY);
-    sessionStorage.removeItem(TOKEN_KEY);
-    sessionStorage.removeItem(REFRESH_KEY);
-    sessionStorage.removeItem(USER_KEY);
+    this._storage.remove(AUTH_TOKEN_KEY, AUTH_REFRESH_KEY, AUTH_USER_KEY);
     this.currentUser.set(null);
     this._router.navigate(['/']);
   }
 
   private _storeSession(res: LoginResponse | RegisterResponse): void {
-    localStorage.setItem(TOKEN_KEY, res.token.accessToken);
-    localStorage.setItem(REFRESH_KEY, res.token.refreshToken);
-    localStorage.setItem(USER_KEY, JSON.stringify(res.user));
+    this._storage.set(AUTH_TOKEN_KEY, res.token.accessToken);
+    this._storage.set(AUTH_REFRESH_KEY, res.token.refreshToken);
+    this._storage.set(AUTH_USER_KEY, JSON.stringify(res.user));
     this.currentUser.set(res.user);
   }
 
   private _moveToSession(): void {
-    const token = localStorage.getItem(TOKEN_KEY);
-    const refresh = localStorage.getItem(REFRESH_KEY);
-    const user = localStorage.getItem(USER_KEY);
-
-    if (token) sessionStorage.setItem(TOKEN_KEY, token);
-    if (refresh) sessionStorage.setItem(REFRESH_KEY, refresh);
-    if (user) sessionStorage.setItem(USER_KEY, user);
-
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(REFRESH_KEY);
-    localStorage.removeItem(USER_KEY);
+    this._storage.moveToSession(AUTH_TOKEN_KEY, AUTH_REFRESH_KEY, AUTH_USER_KEY);
   }
 
   private _loadUser(): User | null {
-    const raw = localStorage.getItem(USER_KEY) || sessionStorage.getItem(USER_KEY);
+    const raw = this._storage.get(AUTH_USER_KEY);
     if (!raw) return null;
     try {
       return JSON.parse(raw) as User;

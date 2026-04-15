@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {
-  AbstractControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,10 +13,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
 import { FormHeaderComponent } from '../../../../shared/components/form-header/form-header.component';
+import { PasswordFieldComponent } from '../../../../shared/components/password-field/password-field.component';
 import {
-  PasswordFieldComponent,
-  FieldError,
-} from '../../../../shared/components/password-field/password-field.component';
+  CONFIRM_PASSWORD_ERRORS,
+  matchPasswordValidator,
+  PASSWORD_ERRORS,
+  passwordValidators,
+} from '../../../../shared/validators/password.validators';
 
 @Component({
   selector: 'app-register-form',
@@ -50,19 +51,12 @@ export class RegisterFormComponent {
     birthDate: [''],
     phone: ['', [Validators.pattern(/^[\d\s()+-]{10,15}$/)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
-    confirmPassword: ['', [Validators.required, RegisterFormComponent.matchPasswordValidator]],
+    password: ['', passwordValidators],
+    confirmPassword: ['', [Validators.required, matchPasswordValidator]],
   });
 
-  readonly passwordErrors: FieldError[] = [
-    { key: 'required', message: 'Senha é obrigatória' },
-    { key: 'minlength', message: 'Mínimo de 8 caracteres' },
-  ];
-
-  readonly confirmPasswordErrors: FieldError[] = [
-    { key: 'required', message: 'Confirme sua senha' },
-    { key: 'passwordMismatch', message: 'As senhas não coincidem' },
-  ];
+  readonly passwordErrors = PASSWORD_ERRORS;
+  readonly confirmPasswordErrors = CONFIRM_PASSWORD_ERRORS;
 
   constructor() {
     this.form.controls.password.valueChanges
@@ -99,11 +93,6 @@ export class RegisterFormComponent {
           );
         },
       });
-  }
-
-  static matchPasswordValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.parent?.get('password');
-    return password && password.value !== control.value ? { passwordMismatch: true } : null;
   }
 }
 
