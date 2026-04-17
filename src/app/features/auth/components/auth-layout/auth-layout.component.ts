@@ -18,7 +18,6 @@ export class AuthLayoutComponent {
   readonly activeSlide = signal(0);
 
   readonly slides = [
-    { image: 'assets/images/metanoia-description.jpg', alt: 'Metanoia' },
     { image: 'assets/images/metanoia-fish.png', alt: 'Metanoia Fish' },
     { image: 'assets/images/metanoia-heart.jpg', alt: 'Metanoia Heart' },
   ] as const;
